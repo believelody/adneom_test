@@ -4,7 +4,7 @@ import { useAppHooks } from '../../context'
 
 let gradient = ``
 
-const Loading = ({ }) => {
+const Loading = () => {
     const { useLoading } = useAppHooks()
     const [{ loading, msg }, dispatchLoading] = useLoading
 
@@ -16,13 +16,15 @@ const Loading = ({ }) => {
             alignItems="center"
             justifyContent="center"
             position='fixed'
+            top={0}
             width='100vw'
             height='100vh'
-            backgroundColor='rgba(255, 255, 255, .8)'
+            backgroundColor='rgba(0, 0, 0, .8)'
             flexDirection='column'
+            zIndex={99}
         >
-            <Spinner size={50} />
-            <Text size={600}>{msg ? msg : 'Loading your content'}</Text>
+            <Spinner size={100} />
+            <Text color='white' size={600}>{msg ? msg : 'Loading your content'}</Text>
         </Pane>
     );
 }

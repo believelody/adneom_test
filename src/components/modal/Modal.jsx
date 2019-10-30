@@ -10,10 +10,10 @@ const Modal = () => {
     const [loadingState, dispatchLoading] = useLoading
 
     const closeModal = () => {
-        dispatchLoading({ type: SET_LOADING })
-        action()
-        dispatchModal({ type: CLOSE_MODAL })
-        dispatchLoading({ type: RESET_LOADING })
+      action()
+      // dispatchLoading({ type: SET_LOADING })
+      // dispatchLoading({ type: RESET_LOADING })
+      dispatchModal({ type: CLOSE_MODAL })
     }
 
     return (

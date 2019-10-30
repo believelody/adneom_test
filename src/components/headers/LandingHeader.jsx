@@ -4,7 +4,7 @@ import Logo from '../logo/Logo'
 
 const LandingHeader = () => {
     return (
-        <Pane backgroundColor='#ccc' elevation={1} height={75} display='flex' alignItems='center' justifyContent='space-around'>
+        <Pane backgroundColor='#f5f6fa' elevation={1} height={75} display='flex' alignItems='center' justifyContent='space-around'>
            <Logo logo='logo2' height={120} />
            <Heading size={700}>
                Positive challenge

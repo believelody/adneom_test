@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
+import { Redirect } from 'react-router-dom'
 import { Pane, Card, Text, Button } from 'evergreen-ui'
+import ReactHTMLTableToExcel from 'react-html-table-to-excel'
 // import api from '../../api'
 import FieldComponent from '../fields/FieldComponent'
 import FieldSelect from '../fields/FieldSelect'
@@ -7,19 +9,31 @@ import Label from '../label/Label'
 import ErrorAlert from '../alerts/ErrorAlert'
 import { useAppHooks } from '../../context'
 import { SUCCESS_AUTH, ERROR_AUTH, RESET_ERROR } from '../../reducers/authReducer'
-import { SET_LOADING, RESET_LOADING } from '../../reducers/loadingReducer'
+import { OPEN_MODAL } from '../../reducers/modalReducer'
 // import { setToken } from '../../utils/token.utils'
-// import { setUser } from '../../utils/user.utils'
+import { setUser } from '../../utils/user.util'
+
+const MSG = `
+  Chez Adneom, nous recherchons toujours la perle rare. C'est pourquoi nous vous proposons ce jeu ludique. Juste 10min de votre temps, pas plus, PROMIS!
+  Le questionnaire sera relatif au langage que vous avez choisi.
+  Prêt?
+`
+
+const OPTIONS = [
+    {id: 0, value: 'java', name: 'Java'},
+    {id: 1, value: 'php', name: 'PHP'},
+    {id: 2, value: 'javascript', name: 'Javascript'},
+]
 
 const RegistrationForm = () => {
-    const { useAuth, useLoading, history } = useAppHooks()
-    const [{ errors }, dispatchAuth] = useAuth
-    const [{ loading }, dispatchLoading] = useLoading
-    // const [toastState, dispatchToast] = useToast
+    const { useAuth, useModal, usePage, history } = useAppHooks()
+    const [{ errors, isConnected }, dispatchAuth] = useAuth
+    const [modalState, dispatchModal] = useModal
+    const [{pageLoaded}, dispatcthPage] = usePage
 
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
-    const [language, setLanguage] = useState('')
+    const [language, setLanguage] = useState(OPTIONS[0].value)
 
     const handleName = e => setName(e.target.value)
     const handleEmail = e => setEmail(e.target.value)
@@ -29,30 +43,34 @@ const RegistrationForm = () => {
         e.preventDefault()
         dispatchAuth({ type: RESET_ERROR })
         if (!name) {
-            dispatchAuth({ type: ERROR_AUTH, payload: { password: 'Le champ Nom est obligatoire' } })
+            dispatchAuth({ type: ERROR_AUTH, payload: { name: 'Le champ Nom est obligatoire' } })
         }
-        if (!email) {
+        else if (!email) {
             dispatchAuth({ type: ERROR_AUTH, payload: { email: 'Le champ Email est obligatoire' } })
         }
-        if (!language) {
-            dispatchAuth({ type: ERROR_AUTH, payload: { email: 'Le champ Langage est obligatoire' } })
+        else if (!language) {
+            dispatchAuth({ type: ERROR_AUTH, payload: { language: 'Le champ Langage est obligatoire' } })
         }
-        dispatchLoading({ type: SET_LOADING, payload: { msg: 'Patientez un instant svp...' } })
-        setTimeout(() => {
-            console.log(name, email, language)
-        }, 3000)
-        // try {
-
-        // } catch (e) {
-        //     dispatchAuth({ type: ERROR_AUTH, payload: { authFailed: e.message } })
-        //     console.log(e)
-        // }
-        dispatchLoading({ type: RESET_LOADING })
+        else {
+          dispatchModal({
+            type: OPEN_MODAL,
+            payload: {
+              title: `Bienvenue ${name}`,
+              msg: MSG,
+              labelConfirm: 'Accéder au questionnaire',
+              action: () => {
+                dispatchAuth({ type: SUCCESS_AUTH, payload: {name, email} })
+                setUser({name, email})
+              }
+            }
+          })
+        }
     }
 
-    // useEffect(() => { }, [errors])
+    console.log(isConnected)
 
     return (
+        !isConnected ?
         <Card
             display='flex'
             alignItems='center'
@@ -70,7 +88,7 @@ const RegistrationForm = () => {
                     <FieldComponent
                         label={<Label name='Nom *' />}
                         name='name'
-                        placeholder='ex: username@mail.com'
+                        placeholder='entrez votre nom et prénom'
                         handleChange={handleName}
                         error={errors && errors.name}
                     />
@@ -86,12 +104,8 @@ const RegistrationForm = () => {
                         label={<Label name='Langages *' />}
                         description='Choisissez votre langage de prédilection'
                         handleSelect={handleLanguage}
-                        options={[
-                            {id: 0, value: 'java', name: 'Java'},
-                            {id: 1, value: 'php', name: 'PHP'},
-                            {id: 2, value: 'javascript', name: 'Javascript'},
-                        ]}
-                        error={errors && errors.language}
+                        options={OPTIONS}
+                        value={language}
                     />
                     {
                         errors && errors.authFailed &&
@@ -100,7 +114,8 @@ const RegistrationForm = () => {
                     <Button appearance='primary'>Commencez</Button>
                 </form>
             </Pane>
-        </Card>
+        </Card> :
+        <Redirect to='/quizz' />
     )
 }
 
