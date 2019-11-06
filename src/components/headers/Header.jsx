@@ -12,7 +12,7 @@ const Header = ({ location }) => {
   return (
     <Pane>
       {
-        pageLoaded === '/quizz' ?
+        pageLoaded === '/quizz' && isConnected ?
         <QuizzHeader /> :
         <LandingHeader />
       }

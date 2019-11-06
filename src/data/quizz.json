@@ -1,0 +1,53 @@
+{
+    "java": [
+        {
+            "question": "",
+            "choices": [],
+            "answer": ""
+        },
+        {
+            "question": "",
+            "choices": [],
+            "answer": ""
+        },
+        {
+            "question": "",
+            "choices": [],
+            "answer": ""
+        }
+    ],
+    "php": [
+        {
+            "question": "",
+            "choices": [],
+            "answer": ""
+        },
+        {
+            "question": "",
+            "choices": [],
+            "answer": ""
+        },
+        {
+            "question": "",
+            "choices": [],
+            "answer": ""
+        }
+    ],
+    "javascript": [
+        {
+            "question": "What's means ES6 ?",
+            "choices": ["EcmaScript6", "EasySolution6", "External Stockage version 6"],
+            "answer": "EcmaScript6"
+        },
+        {
+            "question": "What is vanilla script ?",
+            "choices": ["It is a javascript library", "It's javascript without any libraries or framework", "It's a brand new javascript framework"],
+            "answer": "It's javascript without any libraries or framework"
+        },
+        {
+            "question": "What's main difference between typescript and javascript ?",
+            "choices": ["Typescript deals with type object, not javascript", "No difference", "We use typescipt for backend application"],
+            "answer": "Typescript deals with type object, not javascript"
+        }
+    ]
+}

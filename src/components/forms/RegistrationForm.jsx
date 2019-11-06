@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Redirect } from 'react-router-dom'
 import { Pane, Card, Text, Button } from 'evergreen-ui'
-import ReactHTMLTableToExcel from 'react-html-table-to-excel'
+import uuid from 'uuid'
 // import api from '../../api'
 import FieldComponent from '../fields/FieldComponent'
 import FieldSelect from '../fields/FieldSelect'
@@ -34,6 +34,7 @@ const RegistrationForm = () => {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [language, setLanguage] = useState(OPTIONS[0].value)
+    const [userId, setUserId] = useState()
 
     const handleName = e => setName(e.target.value)
     const handleEmail = e => setEmail(e.target.value)
@@ -52,6 +53,7 @@ const RegistrationForm = () => {
             dispatchAuth({ type: ERROR_AUTH, payload: { language: 'Le champ Langage est obligatoire' } })
         }
         else {
+            setUserId(uuid())
           dispatchModal({
             type: OPEN_MODAL,
             payload: {
@@ -59,15 +61,14 @@ const RegistrationForm = () => {
               msg: MSG,
               labelConfirm: 'Accéder au questionnaire',
               action: () => {
-                dispatchAuth({ type: SUCCESS_AUTH, payload: {name, email} })
-                setUser({name, email})
+                let user = { name, email, language }
+                dispatchAuth({ type: SUCCESS_AUTH, payload: {user} })
+                setUser(user)
               }
             }
           })
         }
     }
-
-    console.log(isConnected)
 
     return (
         !isConnected ?
@@ -115,7 +116,7 @@ const RegistrationForm = () => {
                 </form>
             </Pane>
         </Card> :
-        <Redirect to='/quizz' />
+        <Redirect to={`/users/${userId}`} />
     )
 }
 
