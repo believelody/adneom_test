@@ -5,6 +5,7 @@ import { toastReducer, initToastState } from '../reducers/toastReducer'
 import { modalReducer, initModalState } from '../reducers/modalReducer'
 import { authReducer, initAuthState } from '../reducers/authReducer'
 import { pageReducer, initPageState } from '../reducers/pageReducer'
+import { quizzReducer, initQuizzState } from '../reducers/quizzReducer'
 
 const history = createBrowserHistory({
     forceRefresh: true
@@ -20,6 +21,7 @@ export const AppProvider = ({ children }) => (
             useToast: useReducer(toastReducer, initToastState),
             useModal: useReducer(modalReducer, initModalState),
             usePage: useReducer(pageReducer, initPageState),
+            useQuizz: useReducer(quizzReducer, initQuizzState),
             history
         }}
     >

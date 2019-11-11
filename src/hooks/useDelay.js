@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react'
+import { useAppHooks } from '../context'
 
 export default (timesUp) => {
+  const { useQuizz } = useAppHooks()
+  const [{ isEnded }, dispatchQuizz] = useQuizz
+
   const [minDelay, setMin] = useState(0)
   const [secDelay, setSec] = useState(0)
-  // const [timesUp, setTimesUp] = useState(false)
 
   const minDelayInterval = null
   const secDelayInterval = null
@@ -12,9 +15,7 @@ export default (timesUp) => {
     if (timesUp) {
       setInterval(() => {
         setSec(prevSec => {
-          console.log(prevSec)
           if (prevSec === 59) {
-            console.log(prevSec)
             setMin(prevMin => prevMin + 1)
             return 0
           }
@@ -26,6 +27,13 @@ export default (timesUp) => {
     }
   }, [timesUp])
 
+  useEffect(() => {
+    if (isEnded) {
+      console.log('ended')
+      clearInterval(minDelayInterval)
+      clearInterval(secDelayInterval)
+    }
+  }, [isEnded])
 
   return [minDelay, secDelay]
 }

@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react'
+import { useAppHooks } from '../context'
 
 export default (start) => {
+  const { useQuizz } = useAppHooks()
+  const [{ isEnded }, dispatchQuizz] = useQuizz
+
   const [minCount, setMin] = useState(start)
   const [secCount, setSec] = useState(0)
   const [timesUp, setTimesUp] = useState(false)
@@ -38,6 +42,14 @@ export default (start) => {
       clearInterval(secCountInterval)
     }
   }, [secCount])
+
+  useEffect(() => {
+    if (isEnded) {
+      console.log('ended')
+      clearInterval(minCountInterval)
+      clearInterval(secCountInterval)
+    }
+  }, [isEnded])
 
   return [minCount, secCount, timesUp]
 }
