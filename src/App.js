@@ -8,10 +8,19 @@ import Modal from './components/modal/Modal';
 import { useAppHooks } from './context';
 import { getUser } from './utils/user.util';
 import { SET_LOADING } from './reducers/loadingReducer';
+import { getCandidats } from './utils/candidat.util';
+import { GET_ALL_CANDIDATS } from './reducers/candidatReducer';
 
 function App() {
-  const {useAuth} = useAppHooks()
-  const [{isConnect}, dispatchAuth] = useAuth
+  const {useAuth, useCandidat} = useAppHooks()
+  const [{ isConnect }, dispatchAuth] = useAuth
+  const [{ candidats }, dispatchCandidat] = useCandidat
+
+  useEffect(() => {
+    if (getCandidats() && candidats.length === 0) {
+      dispatchCandidat({ type: GET_ALL_CANDIDATS, payload: { candidats: getCandidats() } })
+    }
+  }, [getCandidats])
 
   useEffect(() => {
     if (!isConnect && getUser()) {

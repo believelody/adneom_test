@@ -53,7 +53,8 @@ const RegistrationForm = () => {
             dispatchAuth({ type: ERROR_AUTH, payload: { language: 'Le champ Langage est obligatoire' } })
         }
         else {
-            setUserId(uuid())
+            let id = uuid()
+            setUserId(id)
           dispatchModal({
             type: OPEN_MODAL,
             payload: {
@@ -61,7 +62,7 @@ const RegistrationForm = () => {
               msg: MSG,
               labelConfirm: 'Accéder au questionnaire',
               action: () => {
-                let user = { name, email, language }
+                let user = { id, name, email, language }
                 dispatchAuth({ type: SUCCESS_AUTH, payload: {user} })
                 setUser(user)
               }
@@ -82,7 +83,7 @@ const RegistrationForm = () => {
             margin='auto'
         >
             <Pane borderBottom width='100%' paddingY={5} textAlign='center'>
-                <Text size={500}>Connect to your account</Text>
+                <Text size={500}>Enregistrez-vous sur ce formulaire et démarrer le test</Text>
             </Pane>
             <Pane textAlign='center' marginY={20}>
                 <form onSubmit={handleSubmit}>

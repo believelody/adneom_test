@@ -3,18 +3,32 @@ import { Pane, Card, Paragraph } from 'evergreen-ui'
 import Label from '../components/label/Label'
 import { useAppHooks } from '../context'
 import { BACK_HOME } from '../reducers/pageReducer'
+import { ADD_CANDIDAT } from '../reducers/candidatReducer'
+import { setCandidats, getCandidats } from '../utils/candidat.util'
 
 const ThanksPage = () => {
-    const { useAuth, useQuizz, usePage } = useAppHooks()
+    const { useAuth, useQuizz, usePage, useCandidat } = useAppHooks()
     const [ pageState, dispatchPage ] = usePage
     const [{user}, dispatchAuth] = useAuth
-    const [quizzState, dispatchQuizz] = useQuizz
+    const [{score, min, sec}, dispatchQuizz] = useQuizz
+    const [{candidats}, dispatchCandidat] = useCandidat
 
     useEffect(() => {
-        dispatchPage({ type: BACK_HOME })
-    }, [])
-
-    console.log(quizzState)
+        if (sec > 0) {
+            let candidat = {
+                id: user.id,
+                name: user.name,
+                email: user.email,
+                language: user.language,
+                score,
+                time: `${min}min${sec}sec`
+            }
+    
+            dispatchPage({ type: BACK_HOME })
+            dispatchCandidat({ type: ADD_CANDIDAT, payload: {candidat} })
+            setCandidats([candidat, ...candidats])
+        }
+    }, [sec])
 
     return (
         <Pane>

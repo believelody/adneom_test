@@ -29,7 +29,6 @@ export default (timesUp) => {
 
   useEffect(() => {
     if (isEnded) {
-      console.log('ended')
       clearInterval(minDelayInterval)
       clearInterval(secDelayInterval)
     }

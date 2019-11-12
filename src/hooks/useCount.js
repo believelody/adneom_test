@@ -45,7 +45,6 @@ export default (start) => {
 
   useEffect(() => {
     if (isEnded) {
-      console.log('ended')
       clearInterval(minCountInterval)
       clearInterval(secCountInterval)
     }

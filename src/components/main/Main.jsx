@@ -6,15 +6,22 @@ import QuizzPage from '../../pages/QuizzPage'
 import UserPage from '../../pages/UserPage'
 import PrivateRoute from '../private-route/PrivateRoute'
 import ThanksPage from '../../pages/ThanksPage'
+import AdminPage from '../../pages/AdminPage'
+import CreateAccountPage from '../../pages/CreateAccountPage'
+import LoginPage from '../../pages/LoginPage'
+import AdminRoute from '../admin-route/AdminRoute'
 
 const Main = () => {
     return (
         <Pane>
             <Switch>
-                <Route exact path='/' component={LandingPage} />
+                <AdminRoute exact path='/admin' component={AdminPage} />
                 <PrivateRoute exact path='/users/:id' component={UserPage} />
                 <PrivateRoute exact path='/users/:userId/quizz/:pageId' component={QuizzPage} />
                 <PrivateRoute exact path='/thanks' component={ThanksPage} />
+                <Route exact path='/' component={LandingPage} />
+                <Route exact path='/login' component={LoginPage} />
+                <Route exact path='/create-account' component={CreateAccountPage} />
             </Switch>
         </Pane>
     )

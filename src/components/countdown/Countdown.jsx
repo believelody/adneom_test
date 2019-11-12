@@ -27,8 +27,6 @@ const Countdown = () => {
     }
   }, [isEnded, timesUp])
 
-  // console.log(minDelay)
-
   return (
       !timesUp ?
       <Pane>

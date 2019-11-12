@@ -12,6 +12,7 @@ const QCMQuizzForm = ({ data, matchParams }) => {
     const [value, setValue] = useState(null)
 
     const handleResponse = e => {
+        console.log(value)
         if (value === data.answer) {
             dispatchQuizz({ type: ANSWER_FOUND })
         }
@@ -33,18 +34,20 @@ const QCMQuizzForm = ({ data, matchParams }) => {
                     onChange={v => setValue(v)}
                 />
             </Pane>
-            <Pane>
-                <Button onClick={handleResponse}>
-                    {
-                        matchParams.pageId == data.choices.length ?
-                        <Link to='/thanks'>
+            <Pane>                
+                {
+                    matchParams.pageId == data.choices.length ?
+                    <Link to='/thanks'>
+                        <Button onClick={handleResponse}>
                             <Text>Terminer le quizz</Text>
-                        </Link> :
-                        <Link to={`${+matchParams.pageId + 1}`}>
+                        </Button>
+                    </Link> :
+                    <Link to={`${+matchParams.pageId + 1}`}>
+                        <Button onClick={handleResponse}>
                             <Text>Question suivante</Text>
-                        </Link>
-                    }
-                </Button>
+                        </Button>
+                    </Link>
+                }
             </Pane>
         </Card>
     )

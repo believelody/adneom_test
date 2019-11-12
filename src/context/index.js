@@ -6,6 +6,7 @@ import { modalReducer, initModalState } from '../reducers/modalReducer'
 import { authReducer, initAuthState } from '../reducers/authReducer'
 import { pageReducer, initPageState } from '../reducers/pageReducer'
 import { quizzReducer, initQuizzState } from '../reducers/quizzReducer'
+import { candidatReducer, initCandidatState } from '../reducers/candidatReducer'
 
 const history = createBrowserHistory({
     forceRefresh: true
@@ -22,6 +23,7 @@ export const AppProvider = ({ children }) => (
             useModal: useReducer(modalReducer, initModalState),
             usePage: useReducer(pageReducer, initPageState),
             useQuizz: useReducer(quizzReducer, initQuizzState),
+            useCandidat: useReducer(candidatReducer, initCandidatState),
             history
         }}
     >
