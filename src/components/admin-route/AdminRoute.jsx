@@ -10,6 +10,7 @@ const AdminRoute = ({ component: Component, ...rest }) => {
 
     useEffect(() => {
         if (!isAdmin && getIsAdmin()) {
+            console.log(true)
             dispatchAuth({ type: SUCCESS_ADMIN })
         }
     }, [])
@@ -18,7 +19,7 @@ const AdminRoute = ({ component: Component, ...rest }) => {
         <Route
             {...rest}
             render={
-                props => getIsAdmin() ?
+                props => getIsAdmin() || isAdmin ?
                     <Component {...props} /> :
                     <Redirect to='/login' />
             }

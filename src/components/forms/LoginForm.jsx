@@ -71,7 +71,6 @@ const LoginForm = () => {
       justifyContent='center'
       flexDirection='column'
       elevation={2}
-      width='60%'
     >
       <Pane borderBottom width='100%' paddingY={5} textAlign='center'>
         <Text size={500}>Connectez-vous à votre espace admin</Text>

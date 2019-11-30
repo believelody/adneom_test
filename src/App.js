@@ -44,7 +44,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Pane minHeight='100vh'>
+      <Pane minHeight='100vh' background="url('adneom_bg_3.jpg')" boxSizing='border' backgroundSize='cover'>
         <Header />
         <Main />
         <Loading />

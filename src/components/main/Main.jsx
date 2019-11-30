@@ -15,7 +15,6 @@ const Main = () => {
     return (
         <Pane>
             <Switch>
-                <Redirect from='/' to='/login' />
                 <AdminRoute exact path='/admin' component={AdminPage} />
                 <PrivateRoute exact path='/users/:id' component={UserPage} />
                 <PrivateRoute exact path='/users/:userId/quizz/:pageId' component={QuizzPage} />
@@ -23,6 +22,7 @@ const Main = () => {
                 <Route exact path='/:id/landing' component={LandingPage} />
                 <Route exact path='/login' component={LoginPage} />
                 <Route exact path='/create-account' component={CreateAccountPage} />
+                <Redirect from='/' to='/login' />
             </Switch>
         </Pane>
     )
