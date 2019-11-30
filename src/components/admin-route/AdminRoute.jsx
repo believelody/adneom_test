@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { useAppHooks } from '../../context'
-import { getAdmin } from '../../utils/admin.util'
-import { SUCCESS_AUTH } from '../../reducers/authReducer'
+import { getIsAdmin } from '../../utils/admin.util'
+import { SUCCESS_ADMIN } from '../../reducers/authReducer'
 
 const AdminRoute = ({ component: Component, ...rest }) => {
     const { useAuth } = useAppHooks()
-    const [{user}, dispatchAuth] = useAuth
+    const [{isAdmin}, dispatchAuth] = useAuth
 
     useEffect(() => {
-        if (getAdmin()) {
-            dispatchAuth({ type: SUCCESS_AUTH, payload: {user: getAdmin()} })
+        if (!isAdmin && getIsAdmin()) {
+            dispatchAuth({ type: SUCCESS_ADMIN })
         }
     }, [])
 
@@ -18,7 +18,7 @@ const AdminRoute = ({ component: Component, ...rest }) => {
         <Route
             {...rest}
             render={
-                props => getAdmin() ?
+                props => getIsAdmin() ?
                     <Component {...props} /> :
                     <Redirect to='/login' />
             }

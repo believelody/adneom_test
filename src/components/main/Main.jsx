@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 import { Pane } from 'evergreen-ui'
 import LandingPage from '../../pages/LandingPage'
 import QuizzPage from '../../pages/QuizzPage'
@@ -15,11 +15,12 @@ const Main = () => {
     return (
         <Pane>
             <Switch>
+                <Redirect from='/' to='/login' />
                 <AdminRoute exact path='/admin' component={AdminPage} />
                 <PrivateRoute exact path='/users/:id' component={UserPage} />
                 <PrivateRoute exact path='/users/:userId/quizz/:pageId' component={QuizzPage} />
                 <PrivateRoute exact path='/thanks' component={ThanksPage} />
-                <Route exact path='/' component={LandingPage} />
+                <Route exact path='/:id/landing' component={LandingPage} />
                 <Route exact path='/login' component={LoginPage} />
                 <Route exact path='/create-account' component={CreateAccountPage} />
             </Switch>

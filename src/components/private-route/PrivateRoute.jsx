@@ -5,7 +5,9 @@ import { getUser } from '../../utils/user.util'
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
     const { useAuth } = useAppHooks()
-    const [{isConnected}, dispatchAuth] = useAuth
+    const [{isConnected, user}, dispatchAuth] = useAuth
+
+    console.log(user)
 
     return (
         <Route

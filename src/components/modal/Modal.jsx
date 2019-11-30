@@ -5,14 +5,11 @@ import { SET_LOADING, RESET_LOADING } from '../../reducers/loadingReducer'
 import { CLOSE_MODAL } from '../../reducers/modalReducer'
 
 const Modal = () => {
-    const { useModal, useLoading } = useAppHooks()
-    const [{ isOpened, title, msg, status, action, labelConfirm }, dispatchModal] = useModal
-    const [loadingState, dispatchLoading] = useLoading
+    const { useModal } = useAppHooks()
+    const [{ isOpened, title, msg, status, action, labelConfirm, children }, dispatchModal] = useModal
 
     const closeModal = () => {
-      action()
-      // dispatchLoading({ type: SET_LOADING })
-      // dispatchLoading({ type: RESET_LOADING })
+      if (action) action()
       dispatchModal({ type: CLOSE_MODAL })
     }
 
@@ -27,6 +24,7 @@ const Modal = () => {
                 confirmLabel={labelConfirm ? labelConfirm : 'Delete'}
             >
                 {msg ? msg : 'Please confirm your action'}
+                {children}
             </Dialog>
         </Pane>
     )

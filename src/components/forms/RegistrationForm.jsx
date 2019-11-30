@@ -14,7 +14,7 @@ import { OPEN_MODAL } from '../../reducers/modalReducer'
 import { setUser } from '../../utils/user.util'
 
 const MSG = `
-  Chez Adneom, nous recherchons toujours la perle rare. C'est pourquoi nous vous proposons ce jeu ludique. Juste 10min de votre temps, pas plus, PROMIS!
+  Chez Adneom, nous recherchons des candidats motivés ayant le seul de la curiosité. C'est pourquoi nous vous proposons ce jeu ludique. Juste 10min de votre temps, pas plus, PROMIS!
   Le questionnaire sera relatif au langage que vous avez choisi.
   Prêt?
 `
@@ -23,18 +23,18 @@ const OPTIONS = [
     {id: 0, value: 'java', name: 'Java'},
     {id: 1, value: 'php', name: 'PHP'},
     {id: 2, value: 'javascript', name: 'Javascript'},
+    {id: 3, value: 'c#', name: 'C#'},
+    {id: 4, value: 'python', name: 'Python'},
 ]
 
-const RegistrationForm = () => {
-    const { useAuth, useModal, usePage, history } = useAppHooks()
+const RegistrationForm = ({ userId }) => {
+    const { useAuth, useModal } = useAppHooks()
     const [{ errors, isConnected }, dispatchAuth] = useAuth
     const [modalState, dispatchModal] = useModal
-    const [{pageLoaded}, dispatcthPage] = usePage
 
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [language, setLanguage] = useState(OPTIONS[0].value)
-    const [userId, setUserId] = useState()
 
     const handleName = e => setName(e.target.value)
     const handleEmail = e => setEmail(e.target.value)
@@ -53,8 +53,7 @@ const RegistrationForm = () => {
             dispatchAuth({ type: ERROR_AUTH, payload: { language: 'Le champ Langage est obligatoire' } })
         }
         else {
-            let id = uuid()
-            setUserId(id)
+            console.log(userId)
           dispatchModal({
             type: OPEN_MODAL,
             payload: {
@@ -62,7 +61,7 @@ const RegistrationForm = () => {
               msg: MSG,
               labelConfirm: 'Accéder au questionnaire',
               action: () => {
-                let user = { id, name, email, language }
+                let user = { id: userId, name, email, language }
                 dispatchAuth({ type: SUCCESS_AUTH, payload: {user} })
                 setUser(user)
               }

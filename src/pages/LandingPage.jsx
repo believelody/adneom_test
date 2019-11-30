@@ -6,21 +6,19 @@ import { BACK_HOME } from '../reducers/pageReducer'
 import { deleteUser } from '../utils/user.util'
 import { getCandidats } from '../utils/candidat.util'
 
-const LandingPage = () => {
+const LandingPage = ({ match }) => {
   const { usePage, useCandidat } = useAppHooks()
   const [pageState, dispatchPage] = usePage
   const [{candidats}, dispatchCandidat] = useCandidat
 
   useEffect(() => {
-    deleteUser()
+    // deleteUser()
     dispatchPage({ type: BACK_HOME })
   }, [])
 
-  console.log(candidats)
-
   return (
       <Pane>
-        <RegistrationForm />
+        <RegistrationForm userId={match.params.id} />
       </Pane>
   )
 }

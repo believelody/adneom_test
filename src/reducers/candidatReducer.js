@@ -1,5 +1,6 @@
 export const GET_ALL_CANDIDATS = 'GET_ALL_CANDIDATS'
 export const ADD_CANDIDAT = 'ADD_CANDIDAT'
+export const UPDATE_CANDIDAT = 'UPDATE_CANDIDAT'
 export const DELETE_ONE_CANDIDAT = 'DELETE_ONE_CANDIDAT'
 export const DELETE_ALL_CANDIDATS = 'DELETE_ALL_CANDIDATS'
 
@@ -19,6 +20,14 @@ export const candidatReducer = (state, { type, payload }) => {
             return {
                 ...state,
                 candidats: [payload.candidat, ...state.candidats]
+            }
+
+        case ADD_CANDIDAT:
+            let candidat = state.candidats.find(c => c.id === payload.candidat.id)
+            candidat = {...payload.candidat}
+
+            return {
+                ...state
             }
 
         case DELETE_ONE_CANDIDAT:

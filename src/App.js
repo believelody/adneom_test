@@ -10,23 +10,37 @@ import { getUser } from './utils/user.util';
 import { SET_LOADING } from './reducers/loadingReducer';
 import { getCandidats } from './utils/candidat.util';
 import { GET_ALL_CANDIDATS } from './reducers/candidatReducer';
+import { getAdmin, getIsAdmin } from './utils/admin.util';
+import { SET_ADMIN, SUCCESS_ADMIN, SUCCESS_AUTH } from './reducers/authReducer';
 
 function App() {
   const {useAuth, useCandidat} = useAppHooks()
-  const [{ isConnect }, dispatchAuth] = useAuth
+  const [{ isConnected, isAdmin }, dispatchAuth] = useAuth
   const [{ candidats }, dispatchCandidat] = useCandidat
 
   useEffect(() => {
-    if (getCandidats() && candidats.length === 0) {
+    if (getCandidats()) {
       dispatchCandidat({ type: GET_ALL_CANDIDATS, payload: { candidats: getCandidats() } })
     }
   }, [getCandidats])
 
   useEffect(() => {
-    if (!isConnect && getUser()) {
-      dispatchAuth({ type: SET_LOADING, payload: {user: getUser()} })
+    if (!isConnected && getAdmin()) {
+      dispatchAuth({ type: SET_ADMIN, payload: {admins: getAdmin()} })
+    }
+  }, [getAdmin])
+
+  useEffect(() => {
+    if (!isConnected && getUser()) {
+      dispatchAuth({ type: SUCCESS_AUTH, payload: {user: getUser()} })
     }
   }, [getUser])
+
+  useEffect(() => {
+    if (!isAdmin && getIsAdmin()) {
+      dispatchAuth({ type: SUCCESS_ADMIN })
+    }
+  }, [getIsAdmin])
 
   return (
     <BrowserRouter>

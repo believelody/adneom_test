@@ -19,7 +19,7 @@ const UserPage = ({ match }) => {
         <Card marginX={isMobile() ? 0 : 150} marginTop={50} elevation={1} padding={50}>
             <Paragraph>
                 Tout d'abord merci encore de participer à ce quizz. Permet moi de te tutoyer.
-                Tu as choisi le quizz {user.language}. Le temps imparti n'est pas un handicap, nous voulons simplement voir en combien de temps tu es capable de le faire.
+                Tu as choisi le quizz {user && user.language}. Le temps imparti n'est pas un handicap, nous voulons simplement voir en combien de temps tu es capable de le faire.
                 Une fois la question finie, tu peux appuyer sur le bouton "Suivant" pour accéder à la page suivante. Utilise tout document qui te semble adéquat pour finaliser le quizz et bonne chance à toi.
             </Paragraph>
             <hr />

@@ -1,22 +1,26 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Pane, Card, Paragraph } from 'evergreen-ui'
 import Label from '../components/label/Label'
 import { useAppHooks } from '../context'
 import { BACK_HOME } from '../reducers/pageReducer'
-import { ADD_CANDIDAT } from '../reducers/candidatReducer'
+import { ADD_CANDIDAT, UPDATE_CANDIDAT } from '../reducers/candidatReducer'
 import { setCandidats, getCandidats } from '../utils/candidat.util'
+import { getUser } from '../utils/user.util'
 
 const ThanksPage = () => {
     const { useAuth, useQuizz, usePage, useCandidat } = useAppHooks()
     const [ pageState, dispatchPage ] = usePage
-    const [{user}, dispatchAuth] = useAuth
+    const [authState, dispatchAuth] = useAuth
     const [{score, min, sec}, dispatchQuizz] = useQuizz
     const [{candidats}, dispatchCandidat] = useCandidat
 
+    const [user, setUser] = useState(getUser())
+
     useEffect(() => {
         if (sec > 0) {
-            let candidat = {
-                id: user.id,
+            let candidat = candidats.find(c => c.id === user.id)
+            candidat = {
+                ...candidat,
                 name: user.name,
                 email: user.email,
                 language: user.language,
@@ -25,8 +29,11 @@ const ThanksPage = () => {
             }
     
             dispatchPage({ type: BACK_HOME })
-            dispatchCandidat({ type: ADD_CANDIDAT, payload: {candidat} })
-            setCandidats([candidat, ...candidats])
+            dispatchCandidat({ type: UPDATE_CANDIDAT, payload: {candidat} })
+
+            let index = candidats.findIndex(c => c.id === candidat.id)
+            candidats[index] = candidat
+            setCandidats(candidats)
         }
     }, [sec])
 
@@ -35,7 +42,9 @@ const ThanksPage = () => {
             <Card marginX={80}>
                 <Label name={`Thank YOU ${user.name} !!!`} />
                 <Paragraph>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad nulla exercitationem, animi nesciunt architecto officia labore atque dicta similique a quibusdam eaque earum quis quidem sed. Qui consequatur ut in eos, voluptates minima animi. Aperiam ipsam delectus consequuntur voluptatum beatae architecto atque odit quod est repellat quaerat, quibusdam, eaque vel eveniet expedita accusamus asperiores dicta dolorum repellendus voluptate ipsum? At accusantium vitae eos exercitationem autem. Alias eos deserunt recusandae dolore delectus quibusdam, deleniti nesciunt laborum?
+                    Merci à toi d'avoir participer à notre quizz. On espère que tu t'es amusé. Nous étudierons tes résultats et reviendront probablement vers toi.
+                    Si tu souhaites t'entrainer sur d'autres technologies, n'hésites pas ;)
+                    A très bientôt.
                 </Paragraph> 
             </Card>
         </Pane>

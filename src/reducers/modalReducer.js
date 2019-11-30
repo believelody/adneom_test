@@ -29,7 +29,10 @@ export const modalReducer = (state, { type, payload }) => {
         case OPEN_MODAL_CHILDREN:
             return {
                 ...state,
-                children: payload.children
+                title: payload.title,
+                children: payload.children,
+                labelConfirm: payload.labelConfirm,
+                isOpened: true
             }
 
         case OPEN_MODAL_CONFIRM:

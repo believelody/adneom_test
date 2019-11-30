@@ -14,12 +14,13 @@ const CandidatList = () => {
     console.log(candidats)
 
     return (
-        <Card elevation={1} marginX={isMobileUtil() ? 0 : '10%'}>
+        <Card elevation={1}>
             {
                 candidats.length > 0 ?
                 <Table>
                     <Table.Head>
                         <Table.TextHeaderCell>Nom & Prénom</Table.TextHeaderCell>
+                        <Table.TextHeaderCell>Contact</Table.TextHeaderCell>
                         <Table.TextHeaderCell>Email</Table.TextHeaderCell>
                         <Table.TextHeaderCell>Langage choisi</Table.TextHeaderCell>
                         <Table.TextHeaderCell>Score</Table.TextHeaderCell>

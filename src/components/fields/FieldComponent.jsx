@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Pane, TextInputField } from 'evergreen-ui'
 
 const FieldComponent = ({
-    label, description = '', hint = '', name, type = 'text', placeholder, handleChange, error, validationMessage, value
+    label, description = '', hint = '', name, type = 'text', placeholder, handleChange, error, readOnly, value
 }) => {
     return (
         <Pane>
@@ -18,6 +18,7 @@ const FieldComponent = ({
                 onChange={handleChange}
                 validationMessage={error}
                 value={value}
+                readOnly={readOnly}
             />
         </Pane>
     );
