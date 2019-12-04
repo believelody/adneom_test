@@ -10,6 +10,7 @@ import AdminPage from '../../pages/AdminPage'
 import CreateAccountPage from '../../pages/CreateAccountPage'
 import LoginPage from '../../pages/LoginPage'
 import AdminRoute from '../admin-route/AdminRoute'
+import TestPage from '../../pages/TestPage'
 
 const Main = () => {
     return (
@@ -22,6 +23,7 @@ const Main = () => {
                 <Route exact path='/:id/landing' component={LandingPage} />
                 <Route exact path='/login' component={LoginPage} />
                 <Route exact path='/create-account' component={CreateAccountPage} />
+                <Route exact path='/test' component={TestPage} />
                 <Redirect from='/' to='/login' />
             </Switch>
         </Pane>
